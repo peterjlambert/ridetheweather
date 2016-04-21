@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 import datetime
 from pytz import timezone
 import pytz
-import emoji
 
 
 

@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="forecast">
+	{% if weather %}
+		{{weather}}
+	{% endif %}
+</div>
+<p class="chars"> characters</p>
+{% endblock %}
+
+

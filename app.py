@@ -39,6 +39,7 @@ def getTheWeather():
     def rideStart(): 
         day = whatdayisit()
         ride_time = rideTime()
+        
         if day == 'Tuesday' or day == 'Thursday':
             ride_start = "Today's ride leaves %s from B&Q. " % ride_time.strftime(fmt)
         elif day == 'Saturday' or day == 'Sunday':
@@ -168,10 +169,10 @@ def getTheWeather():
 @app.route("/")
 def main():
     # weather = str(getTheWeather())
-    print getTheWeather()
-    weather = "The weather goes here"
+    
     weather = getTheWeather()
-    return render_template('index.html', weather=weather)
+    charcount = len(weather)
+    return render_template('index.html', weather=weather, charcount=charcount)
     
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')

@@ -1,0 +1,20 @@
+{
+  "name": "ridetheweather",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pete Lambert",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-sass": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "sassdoc": "^2.1.20"
+  }
+}

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>Ride The Weather - VC York</title>
 	<style>
 		* {
@@ -10,7 +11,7 @@
 		body{
 			background: #e0e0e0;
 			color: #666;
-			font-size: 29px;
+			font-size: 1.8rem;
 			font-family: Garamond, Baskerville, 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif;
 			line-height: 1.6em;
 		}
@@ -20,6 +21,7 @@
 			top: 50%;
 			left: 50%;
 			transform: translateX(-50%) translateY(-50%);
+			min-width: 640px;
 		}
 		div.forecast{
 			background: #fff;
@@ -29,6 +31,18 @@
 		p.chars{
 			text-align: right;
 			font-size: 17px;
+		}
+		@media only screen and (max-width: 780px) {
+			div.container{
+				position: static;
+				margin: 1em;
+				transform: none;
+				font-size: 1.2rem;
+				min-width: auto;
+			}
+			div.forecast{
+				padding: 1em;
+			}
 		}
 	</style>
 </head>

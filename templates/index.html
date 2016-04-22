@@ -1,11 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="forecast">
+<div class="forecast" data-characters="{{ charcount }}">
 	{% if weather %}
 		{{weather}}
 	{% endif %}
 </div>
-<p class="chars">{{ charcount }} characters</p>
 {% endblock %}
 
 

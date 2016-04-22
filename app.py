@@ -91,7 +91,7 @@ def getTheWeather():
 
     def temp_description(temp):
         if temp <= 2:
-            tempDescription = 'a chilling ' + readableTemperature(temp) + '. '
+            tempDescription = 'a frost-bitey ' + readableTemperature(temp) + '. #stayindoors'
         elif temp > 2 and temp <= 7:
             tempDescription = "a blummin' nippy " + readableTemperature(temp) + '. '
         elif temp > 7 and temp <= 11:

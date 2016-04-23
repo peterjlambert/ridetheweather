@@ -2,6 +2,7 @@ from flask import Flask, render_template
 import forecastio
 from datetime import datetime, timedelta
 import datetime
+import time
 from pytz import timezone
 import pytz
 app = Flask(__name__)
@@ -27,26 +28,37 @@ def getTheWeather():
 
     def rideTime(): 
         day = whatdayisit()
+        current_time = utcnow()
         if day == 'Tuesday' or day == 'Thursday':
             ride_time = local_datetime.replace(hour=18, minute=00, second=00)
         elif day == 'Saturday' or day == 'Sunday':
             ride_time = local_datetime.replace(hour=9, minute=00, second=00)
         else:
-            ride_time = utcnow()    
+            ride_time = current_time
+        
+        
+        ride_time_seconds = ride_time.astimezone(local_timezone).replace(tzinfo=None)
+        current_time_seconds = current_time
+        ride_time_diff = current_time_seconds - ride_time_seconds
+        ride_time_diff = ride_time_diff.total_seconds()
+        
+        if ride_time_diff > 0: 
+            ride_time = current_time
         return ride_time
-
 
     def rideStart(): 
         day = whatdayisit()
-        ride_time = rideTime()
-        
-        if day == 'Tuesday' or day == 'Thursday':
-            ride_start = "Today's ride leaves %s from B&Q. " % ride_time.strftime(fmt)
-        elif day == 'Saturday' or day == 'Sunday':
-            ride_start = "Today's ride leaves %s from the shelter. " % ride_time.strftime(fmt)
+        ride_time = rideTime()     
+        current_time = utcnow()
+        if ride_time.strftime('%b %d %Y %H:%M:%S') != current_time.strftime('%b %d %Y %H:%M:%S'):   
+            if day == 'Tuesday' or day == 'Thursday':
+                ride_start = "Today's ride leaves %s from B&Q. " % ride_time.strftime(fmt)
+            elif day == 'Saturday' or day == 'Sunday':
+                ride_start = "%s Today's ride leaves %s from the shelter. " % (ride_time, ride_time.strftime(fmt))
         else:
             ride_start = 'Riding now? '
         return ride_start
+        
 
      # Format Temperature
     def readableTemperature( temp ):
@@ -168,8 +180,6 @@ def getTheWeather():
 
 @app.route("/")
 def main():
-    # weather = str(getTheWeather())
-    
     weather = getTheWeather()
     charcount = len(weather)
     return render_template('index.html', weather=weather, charcount=charcount)

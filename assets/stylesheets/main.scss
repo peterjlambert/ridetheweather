@@ -9,12 +9,11 @@ body{
   line-height: 1.6em;
 }
 div.container{
-  max-width: 860px;
+  max-width: 780px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  min-width: 640px;
 }
 div.forecast{
   background: #fff;
@@ -31,7 +30,6 @@ p.chars{
     margin: 1em;
     transform: none;
     font-size: 1.2rem;
-    min-width: none;
   }
   div.forecast{
     padding: 1em;

@@ -54,7 +54,7 @@ def getTheWeather():
             if day == 'Tuesday' or day == 'Thursday':
                 ride_start = "Today's ride leaves %s from B&Q. " % ride_time.strftime(fmt)
             elif day == 'Saturday' or day == 'Sunday':
-                ride_start = "%s Today's ride leaves %s from the shelter. " % (ride_time, ride_time.strftime(fmt))
+                ride_start = "Today's ride leaves %s from the shelter. " % ride_time.strftime(fmt)
         else:
             ride_start = 'Riding now? '
         return ride_start

@@ -66,25 +66,23 @@ def getTheWeather(optLat, optLng, optUnits, club=''):
      # Format Temperature
     def readableTemperature( temp ):
         return '%dC' % (temp)
-    
+   
+   
+    directions = ["N", "NNE", "ENE", "E", "ESE", "SSE", "S", "SSW", "WSW", "W", "WNW", "NNW"]
+ 
+    def bearing_to_direction(bearing):
+        d = 360. / 12.
+        return directions[int((bearing+d/2)/d)] 
     
     # Format compass bearing as textual compass point  
     _winddir_text_array = None
     def winddir_text(pts):
-        "Convert wind direction from 0..15 to compass point text"
-        _winddir_text_array = []
+        "Convert wind direction from 0..15 to compass point text"        
         if pts is None:
             return None
-        pts = int(pts + 0.5) % 16
-        if not _winddir_text_array:
-            _winddir_text_array = (
-                'North', 'NNE', 'NE', 'ENE',
-                'East', 'ESE', 'SE', 'SSE',
-                'South', 'SSW', 'SW', 'WSW',
-                'West', 'WNW', 'NW', 'NNW',
-                )
+        wind_direction = bearing_to_direction(pts)
                 
-        return _winddir_text_array[pts]
+        return wind_direction
         
     def tail_wind(speed, direction):
         tuesdayTailwinds = ['North', 'WNW', 'NW', 'NNW']

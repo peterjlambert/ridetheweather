@@ -7,8 +7,11 @@ from pytz import timezone
 import pytz
 app = Flask(__name__)
 
+optLat = 53.9591
+optLng = -1.0815
+optUnits = 'uk'
 
-def getTheWeather():
+def getTheWeather(optLat, optLng, optUnits):
     # Returns the UTC date
     def utcnow():
         return datetime.datetime.now()
@@ -21,10 +24,7 @@ def getTheWeather():
     local_timezone = timezone('GMT')
     local_datetime = local_timezone.localize(utcnow())
     local_datetime_readable = local_timezone.localize(utcnow()).strftime(fmt)
-
-    lat = 53.9591
-    lng = -1.0815
-    units = 'uk'
+    ride_time_diff = 123
 
     def rideTime(): 
         day = whatdayisit()
@@ -54,7 +54,7 @@ def getTheWeather():
             if day == 'Tuesday' or day == 'Thursday':
                 ride_start = "Today's ride leaves %s from B&Q. " % ride_time.strftime(fmt)
             elif day == 'Saturday' or day == 'Sunday':
-                ride_start = "Today's ride leaves %s from the shelter. " % ride_time.strftime(fmt)
+                ride_start = "Today's ride leaves %s from the shelter." % ride_time.strftime(fmt)
         else:
             ride_start = 'Riding now? '
         return ride_start
@@ -159,9 +159,9 @@ def getTheWeather():
 
     # Forecast.io API
     api_key = 'f7633fa443a2ce17a8d66a1eb771941e'
-    lat = 53.9591
-    lng = -1.0815
-    units = 'uk'
+    lat = optLat
+    lng = optLng
+    units = optUnits
     current_time = local_datetime.isoformat()
     ride_time = rideTime()
     forecast = forecastio.load_forecast(api_key, lat, lng, time=ride_time, units=units)
@@ -180,9 +180,10 @@ def getTheWeather():
 
 @app.route("/")
 def main():
-    weather = getTheWeather()
+    weather = getTheWeather(optLat, optLng, optUnits)
     charcount = len(weather)
     return render_template('index.html', weather=weather, charcount=charcount)
     
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', debug=True)
+    
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True)

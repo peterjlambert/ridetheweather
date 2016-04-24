@@ -48,7 +48,7 @@ def getTheWeather(optLat, optLng, optUnits):
     def rideStart(): 
         day = whatdayisit()
         ride_time = rideTime()     
-        current_time = utcnow()
+        current_time = local_datetime
         if ride_time.strftime('%b %d %Y %H:%M:%S') != current_time.strftime('%b %d %Y %H:%M:%S'):   
             if day == 'Tuesday' or day == 'Thursday':
                 ride_start = "Today's ride leaves %s from B&Q. " % ride_time.strftime(fmt)

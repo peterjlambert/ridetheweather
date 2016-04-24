@@ -84,15 +84,6 @@ def getTheWeather(optLat, optLng, optUnits, club=''):
                 'West', 'WNW', 'NW', 'NNW',
                 )
                 
-            
-            #Reversed list
-            # _winddir_text_array = (
-            #     'NNW', 'NW', 'WNW', 'West', 
-            #     'WSW', 'SW', 'SSW', 'South', 
-            #     'SSE', 'SE', 'ESE', 'East', 
-            #     'ENE', 'NE', 'NNE', 'North'
-            # )
-            # _winddir_text_array = list(reversed(_winddir_text_array))
         return _winddir_text_array[pts]
         
     def tail_wind(speed, direction):
@@ -162,7 +153,7 @@ def getTheWeather(optLat, optLng, optUnits, club=''):
 
         theWeather = rideStart()
         theWeather = theWeather + "The forecast is %s and %s" % (weatherSummary, temperature)
-        theWeather = theWeather + "The wind will blow %s at %s." % (windBearing, strWindSpeed)
+        theWeather = theWeather + "The wind will blow from the %s at %s." % (windBearing, strWindSpeed)
         if tailWind:
             theWeather = theWeather + tailWind
         return theWeather

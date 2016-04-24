@@ -5,13 +5,16 @@ import datetime
 import time
 from pytz import timezone
 import pytz
+import geocoder
+
 app = Flask(__name__)
 
 optLat = 53.9591
 optLng = -1.0815
+optLocation = "York, UK"
 optUnits = 'uk'
 
-def getTheWeather(optLat, optLng, optUnits):
+def getTheWeather(optLat, optLng, optUnits, club=''):
     # Returns the UTC date
     def utcnow():
         return datetime.datetime.now()
@@ -29,10 +32,11 @@ def getTheWeather(optLat, optLng, optUnits):
     def rideTime(): 
         day = whatdayisit()
         current_time = local_datetime
-        if day == 'Tuesday' or day == 'Thursday':
-            ride_time = local_datetime.replace(hour=18, minute=00, second=00)
-        elif day == 'Saturday' or day == 'Sunday':
-            ride_time = local_datetime.replace(hour=9, minute=00, second=00)
+        if club == "vcyork":
+            if day == 'Tuesday' or day == 'Thursday':
+                ride_time = local_datetime.replace(hour=18, minute=00, second=00)
+            elif day == 'Saturday' or day == 'Sunday':
+                ride_time = local_datetime.replace(hour=9, minute=00, second=00)
         else:
             ride_time = current_time
         
@@ -179,10 +183,49 @@ def getTheWeather(optLat, optLng, optUnits):
 
 @app.route("/")
 def main():
-    weather = getTheWeather(optLat, optLng, optUnits)
+    location = geocoder.google(optLocation)
+    locationLatLng = location.latlng
+    locationName = location.city
+    locationLat = locationLatLng[0]
+    locationLng = locationLatLng[1]
+    weather = getTheWeather(locationLat, locationLng, optUnits)
     charcount = len(weather)
-    return render_template('index.html', weather=weather, charcount=charcount)
+    return render_template('index.html', weather=weather, charcount=charcount, locationName=locationName, locationLat=locationLat, locationLng=locationLng)
     
     
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', debug=True)
+@app.route("/location/<location>")
+def local(location):
+    location = geocoder.google(location)
+    locationLatLng = location.latlng
+    if location.city:
+        locationName = location.city
+    elif location.state_long:
+        locationName = location.state_long
+    elif location.country_long:
+        locationName = location.country_long
+    else:
+        locationName = "" 
+    locationLat = locationLatLng[0]
+    locationLng = locationLatLng[1]
+    weather = getTheWeather(locationLat, locationLng, optUnits)
+    charcount = len(weather)
+    return render_template('index.html', weather=weather, charcount=charcount, locationName=locationName, locationLat=locationLat, locationLng=locationLng)
+    
+    
+@app.route("/club/<clubname>")
+def club(clubname):
+    if clubname == "vcyork":
+        location = geocoder.google('York, UK')
+    else:
+        location = geocoder.google('Paris, France')
+    locationLatLng = location.latlng
+    locationName = location.city
+    locationLat = locationLatLng[0]
+    locationLng = locationLatLng[1]
+    weather = getTheWeather(locationLat, locationLng, optUnits, clubname)
+    charcount = len(weather)
+    return render_template('index.html', weather=weather, charcount=charcount, locationName=clubname, locationLat=locationLat, locationLng=locationLng)
+    
+    
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True)

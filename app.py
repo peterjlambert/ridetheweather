@@ -77,19 +77,21 @@ def getTheWeather(optLat, optLng, optUnits, club=''):
             return None
         pts = int(pts + 0.5) % 16
         if not _winddir_text_array:
-            # _winddir_text_array = (
-            #     'North', 'NNE', 'NE', 'ENE',
-            #     'East', 'ESE', 'SE', 'SSE',
-            #     'South', 'SSW', 'SW', 'WSW',
-            #     'West', 'WNW', 'NW', 'NNW',
-            #     )
             _winddir_text_array = (
-                'NNW', 'NW', 'WNW', 'West', 
-                'WSW', 'SW', 'SSW', 'South', 
-                'SSE', 'SE', 'ESE', 'East', 
-                'ENE', 'NE', 'NNE', 'North'
-            )
-            # _winddir_text_array = list(reversed(_winddir_text_array))
+                'North', 'NNE', 'NE', 'ENE',
+                'East', 'ESE', 'SE', 'SSE',
+                'South', 'SSW', 'SW', 'WSW',
+                'West', 'WNW', 'NW', 'NNW',
+                )
+                
+            #Reversed list
+            # _winddir_text_array = (
+            #     'NNW', 'NW', 'WNW', 'West', 
+            #     'WSW', 'SW', 'SSW', 'South', 
+            #     'SSE', 'SE', 'ESE', 'East', 
+            #     'ENE', 'NE', 'NNE', 'North'
+            # )
+            _winddir_text_array = list(reversed(_winddir_text_array))
         return _winddir_text_array[pts]
         
     def tail_wind(speed, direction):
@@ -231,5 +233,5 @@ def club(clubname):
     return render_template('index.html', weather=weather, charcount=charcount, locationName=clubname, locationLat=locationLat, locationLng=locationLng)
     
     
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', debug=True)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True)

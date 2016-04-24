@@ -75,17 +75,21 @@ def getTheWeather(optLat, optLng, optUnits, club=''):
         _winddir_text_array = []
         if pts is None:
             return None
-        #if not isinstance(pts, int):
         pts = int(pts + 0.5) % 16
         if not _winddir_text_array:
-            # _ = _Localisation.translation.gettext
-            # _ = None
+            # _winddir_text_array = (
+            #     'North', 'NNE', 'NE', 'ENE',
+            #     'East', 'ESE', 'SE', 'SSE',
+            #     'South', 'SSW', 'SW', 'WSW',
+            #     'West', 'WNW', 'NW', 'NNW',
+            #     )
             _winddir_text_array = (
-                'North', 'NNE', 'NE', 'ENE',
-                'East', 'ESE', 'SE', 'SSE',
-                'South', 'SSW', 'SW', 'WSW',
-                'West', 'WNW', 'NW', 'NNW',
-                )
+                'NNW', 'NW', 'WNW', 'West', 
+                'WSW', 'SW', 'SSW', 'South', 
+                'SSE', 'SE', 'ESE', 'East', 
+                'ENE', 'NE', 'NNE', 'North'
+            )
+            # _winddir_text_array = list(reversed(_winddir_text_array))
         return _winddir_text_array[pts]
         
     def tail_wind(speed, direction):

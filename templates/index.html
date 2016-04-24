@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
+<h1>{{ locationName }}</h1>
 <div class="forecast" data-characters="{{ charcount }}" data-lat-lng="{{locationLat}},{{locationLng}}">
-	<h1>{{ locationName }}</h1>
 	{% if weather %}
 		{{weather}}
 	{% endif %}

@@ -84,6 +84,7 @@ def getTheWeather(optLat, optLng, optUnits, club=''):
                 'West', 'WNW', 'NW', 'NNW',
                 )
                 
+            
             #Reversed list
             # _winddir_text_array = (
             #     'NNW', 'NW', 'WNW', 'West', 
@@ -161,7 +162,7 @@ def getTheWeather(optLat, optLng, optUnits, club=''):
 
         theWeather = rideStart()
         theWeather = theWeather + "The forecast is %s and %s" % (weatherSummary, temperature)
-        theWeather = theWeather + "Wind will be %s to the %s." % (strWindSpeed, windBearing)
+        theWeather = theWeather + "The wind will blow %s at %s." % (windBearing, strWindSpeed)
         if tailWind:
             theWeather = theWeather + tailWind
         return theWeather
@@ -191,7 +192,7 @@ def getTheWeather(optLat, optLng, optUnits, club=''):
 def main():
     location = geocoder.google(optLocation)
     locationLatLng = location.latlng
-    locationName = location.city
+    locationName = location.city + ', ' + location.country 
     locationLat = locationLatLng[0]
     locationLng = locationLatLng[1]
     weather = getTheWeather(locationLat, locationLng, optUnits)
@@ -204,13 +205,14 @@ def local(location):
     location = geocoder.google(location)
     locationLatLng = location.latlng
     if location.city:
-        locationName = location.city
+        locationName = location.city + ', ' + location.country
     elif location.state_long:
-        locationName = location.state_long
+        locationName = location.state_long + ', ' + location.country
     elif location.country_long:
         locationName = location.country_long
     else:
         locationName = "" 
+        
     locationLat = locationLatLng[0]
     locationLng = locationLatLng[1]
     weather = getTheWeather(locationLat, locationLng, optUnits)
@@ -225,7 +227,7 @@ def club(clubname):
     else:
         location = geocoder.google('Paris, France')
     locationLatLng = location.latlng
-    locationName = location.city
+    locationName = location.city + ', ' + location.country
     locationLat = locationLatLng[0]
     locationLng = locationLatLng[1]
     weather = getTheWeather(locationLat, locationLng, optUnits, clubname)

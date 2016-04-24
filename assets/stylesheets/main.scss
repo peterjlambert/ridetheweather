@@ -6,7 +6,7 @@ body{
   color: #666;
   font-size: 1.8rem;
   font-family: Garamond, Baskerville, 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif;
-  line-height: 1.6em;
+  line-height: 1.4em;
 }
 div.container{
   max-width: 760px;
@@ -22,8 +22,11 @@ div.forecast{
   margin-bottom: .5em;
 }
 h1{
-  font-size: 2rem;
-  margin-top: 0;
+    font-size: .8rem;
+    font-family: helvetica;
+    font-weight: normal;
+    margin: 0;
+    text-transform: uppercase;
 }
 p.chars{
   text-align: right;

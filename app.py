@@ -28,7 +28,7 @@ def getTheWeather(optLat, optLng, optUnits):
 
     def rideTime(): 
         day = whatdayisit()
-        current_time = utcnow()
+        current_time = local_datetime
         if day == 'Tuesday' or day == 'Thursday':
             ride_time = local_datetime.replace(hour=18, minute=00, second=00)
         elif day == 'Saturday' or day == 'Sunday':

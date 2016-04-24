@@ -24,7 +24,7 @@ def getTheWeather(optLat, optLng, optUnits):
     local_timezone = timezone('GMT')
     local_datetime = local_timezone.localize(utcnow())
     local_datetime_readable = local_timezone.localize(utcnow()).strftime(fmt)
-    ride_time_diff = 123
+    # ride_time_diff = 123
 
     def rideTime(): 
         day = whatdayisit()
@@ -36,13 +36,12 @@ def getTheWeather(optLat, optLng, optUnits):
         else:
             ride_time = current_time
         
-        
         ride_time_seconds = ride_time.astimezone(local_timezone).replace(tzinfo=None)
-        current_time_seconds = current_time
+        current_time_seconds = current_time.astimezone(local_timezone).replace(tzinfo=None)
         ride_time_diff = current_time_seconds - ride_time_seconds
         ride_time_diff = ride_time_diff.total_seconds()
         
-        if ride_time_diff > 0: 
+        if ride_time_diff > 60: 
             ride_time = current_time
         return ride_time
 
@@ -185,5 +184,5 @@ def main():
     return render_template('index.html', weather=weather, charcount=charcount)
     
     
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0', debug=True)

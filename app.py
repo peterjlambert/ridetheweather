@@ -6,6 +6,7 @@ import time
 from pytz import timezone
 import pytz
 import geocoder
+import random
 
 app = Flask(__name__)
 
@@ -100,7 +101,7 @@ def getTheWeather(optLat, optLng, optUnits, club=''):
 
     def temp_description(temp):
         if temp <= 2:
-            tempDescription = 'a frost-bitey ' + readableTemperature(temp) + '. #stayindoors'
+            tempDescription = 'a frost-bitey ' + readableTemperature(temp) + '. #stayindoors! '
         elif temp > 2 and temp <= 7:
             tempDescription = "a blummin' nippy " + readableTemperature(temp) + '. '
         elif temp > 7 and temp <= 11:
@@ -175,27 +176,16 @@ def getTheWeather(optLat, optLng, optUnits, club=''):
         
     return showTheWeather()
     
-
-############
-## Routes ##
-############
-
-@app.route("/")
-def main():
-    location = geocoder.google(optLocation)
-    locationLatLng = location.latlng
-    locationName = location.city + ', ' + location.country 
-    locationLat = locationLatLng[0]
-    locationLng = locationLatLng[1]
-    weather = getTheWeather(locationLat, locationLng, optUnits)
-    charcount = len(weather)
-    return render_template('index.html', weather=weather, charcount=charcount, locationName=locationName, locationLat=locationLat, locationLng=locationLng)
-    
-    
-@app.route("/location/<location>")
-def local(location):
+def getRandomLocation():
+    magic_locations = ['Tourmalet, France', 'Gavia, Italy', 'Roubaix Velodrome, Belgium', 
+                       "L'Alpe d'Huez, France", 'Mont Ventoux, France', 
+                       'Col du Galibier, France', 'Tan Hill, UK', 'Buttertubs, UK', 
+                       'Fleet Moss, UK', 'Holme Moss, UK', 'Rosedale Chimney, UK', 'Liege, Belgium']
+    return random.choice(magic_locations)
+        
+def getLatLng(location):
     location = geocoder.google(location)
-    locationLatLng = location.latlng
+    
     if location.city:
         locationName = location.city + ', ' + location.country
     elif location.state_long:
@@ -203,29 +193,62 @@ def local(location):
     elif location.country_long:
         locationName = location.country_long
     else:
-        locationName = "" 
-        
-    locationLat = locationLatLng[0]
-    locationLng = locationLatLng[1]
-    weather = getTheWeather(locationLat, locationLng, optUnits)
+        locationName = ""
+    
+    locationLatLng = location.latlng 
+    if locationLatLng:
+        locationLat = locationLatLng[0]
+        locationLng = locationLatLng[1]
+        return (locationName, locationLat, locationLng);
+    else: 
+        location = getLatLng(getRandomLocation())
+        return (location[0], location[1], location[2])   
+
+############
+## Routes ##
+############
+
+@app.route("/")
+def main():
+    location = getLatLng(optLocation)
+    weather = getTheWeather(location[1], location[2], optUnits)
     charcount = len(weather)
-    return render_template('index.html', weather=weather, charcount=charcount, locationName=locationName, locationLat=locationLat, locationLng=locationLng)
+    return render_template('index.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2])
+    
+    
+@app.route("/location/<location>")
+def local(location):
+    location = getLatLng(location)
+    weather = getTheWeather(location[1], location[2], optUnits)
+    charcount = len(weather)
+    return render_template('index.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2])
     
     
 @app.route("/club/<clubname>")
 def club(clubname):
     if clubname == "vcyork":
-        location = geocoder.google('York, UK')
+        location = getLatLng('York, UK')
     else:
-        location = geocoder.google('Paris, France')
-    locationLatLng = location.latlng
-    locationName = location.city + ', ' + location.country
-    locationLat = locationLatLng[0]
-    locationLng = locationLatLng[1]
-    weather = getTheWeather(locationLat, locationLng, optUnits, clubname)
+        location = getLatLng('Paris, France')
+    
+    weather = getTheWeather(location[1], location[2], optUnits)
     charcount = len(weather)
-    return render_template('index.html', weather=weather, charcount=charcount, locationName=clubname, locationLat=locationLat, locationLng=locationLng)
+    return render_template('index.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2])
     
     
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', debug=True)
+@app.errorhandler(404)
+def page_not_found(e):
+    location = getLatLng(getRandomLocation())
+    weather = getTheWeather(location[1], location[2], optUnits)
+    charcount = len(weather)
+    return render_template('error.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2]), 404
+    
+@app.errorhandler(500)
+def server_error(e):
+    location = getLatLng(getRandomLocation())
+    weather = getTheWeather(location[1], location[2], optUnits)
+    charcount = len(weather)
+    return render_template('error.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2]), 500
+    
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True)

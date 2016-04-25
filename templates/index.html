@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1>{{ locationName }}</h1>
-<div class="forecast" data-characters="{{ charcount }}" data-lat-lng="{{locationLat}},{{locationLng}}">
+{% if locationName %}<h1><a href="http://maps.google.com/maps?q={{ locationLat }},{{ locationLng }}&ll={{ locationLat }},{{ locationLng }}&z=17">{{ locationName }}</a></h1>{% endif %}
+<div class="forecast" data-characters="{{ charcount }}" data-lat-lng="{{ locationLat }},{{ locationLng }}">
 	{% if weather %}
 		{{weather}}
 	{% endif %}

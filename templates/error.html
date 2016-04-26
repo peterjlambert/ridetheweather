@@ -8,7 +8,7 @@
 	<p class="note">(If that doesn't work either and everything below this point is blank and broken, please let me know <a href="http://twitter.com/peterjlambert">@peterjlambert)</p>
 </div>
 
-{% if locationName %}<h1>{{ locationName }}</h1>{% endif %}
+{% if locationName %}<h1><a href="http://maps.google.com/maps?q={{ locationLat }},{{ locationLng }}&ll={{ locationLat }},{{ locationLng }}&z=17">{{ locationName }}</a></h1>{% endif %}
 <div class="forecast" data-characters="{{ charcount }}" data-lat-lng="{{locationLat}},{{locationLng}}">
 	{% if weather %}
 		{{weather}}

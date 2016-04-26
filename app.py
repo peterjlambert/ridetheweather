@@ -74,9 +74,9 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
             
             if ride_time.strftime('%b %d %Y %H:%M:%S') != current_time.strftime('%b %d %Y %H:%M:%S'):   
                 if day == 'Tuesday' or day == 'Thursday':
-                    ride_start = "Today's ride leaves %s from B&Q. " % ride_time.strftime(fmt)
+                    ride_start = "Today's ride: %s from B&Q. " % ride_time.strftime(fmt)
                 elif day == 'Saturday' or day == 'Sunday':
-                    ride_start = "Today's ride leaves %s from the shelter. " % ride_time.strftime(fmt)
+                    ride_start = "Today's ride: %s from the shelter. " % ride_time.strftime(fmt)
         else:
             ride_start = 'Riding now? '
         return ride_start
@@ -167,7 +167,7 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
     def showTheWeather(tailWind=None):
         theWeather = rideStart()
         theWeather = theWeather + "The forecast is %s and %s" % (weatherSummary, temperature)
-        theWeather = theWeather + "The wind will blow from the %s at %s." % (windBearing, strWindSpeed)
+        theWeather = theWeather + "The wind blows from the %s at %s." % (windBearing, strWindSpeed)
         if tailWind:
             theWeather = theWeather + tailWind
         return theWeather

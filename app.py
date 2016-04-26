@@ -167,7 +167,7 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
     def showTheWeather(tailWind=None):
         theWeather = rideStart()
         theWeather = theWeather + "The forecast is %s and %s" % (weatherSummary, temperature)
-        theWeather = theWeather + "The wind blows from the %s at %s." % (windBearing, strWindSpeed)
+        theWeather = theWeather + "Wind is from the %s at %s." % (windBearing, strWindSpeed)
         if tailWind:
             theWeather = theWeather + tailWind
         return theWeather

@@ -1,6 +1,23 @@
 {% extends "layout.html" %}
 {% block body %}
-{% if locationName %}<h1><a href="http://maps.google.com/maps?q={{ locationLat }},{{ locationLng }}&ll={{ locationLat }},{{ locationLng }}&z=17">{{ locationName }}</a></h1>{% endif %}
+{% if locationName %}
+<div class="forecast-header">
+	
+	<form action="/location/" method="POST">
+		<input type="checkbox" id="form-toggle">
+		<span class="change-location">
+			<label for="location" class="main"">Change Location</label>
+			<input type="text" id="location" name="location" placeholder="{{ locationName }}">
+			<button type="submit">Go</button>
+			<label for="form-toggle" class="cancel">Cancel</label>
+		</span>
+		<h1>
+			<a href="http://maps.google.com/maps?q={{ locationLat }},{{ locationLng }}&ll={{ locationLat }},{{ locationLng }}&z=17">{{ locationName }}</a>
+		</h1>
+		<label for="form-toggle">Change</label>
+	</form>
+</div>
+{% endif %}
 <div class="forecast" data-characters="{{ charcount }}" data-lat-lng="{{ locationLat }},{{ locationLng }}">
 	{% if weather %}
 		{{weather}}

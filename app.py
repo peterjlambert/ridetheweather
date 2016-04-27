@@ -1,6 +1,8 @@
 from __future__ import print_function # In python 2.7
 import sys
-from flask import Flask, render_template
+import os
+import requests
+from flask import Flask, render_template, request, url_for
 import forecastio
 from datetime import datetime, timedelta
 import datetime
@@ -231,8 +233,20 @@ def main():
     return render_template('index.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2])
     
     
+@app.route("/location/", methods=['POST', 'GET'])
 @app.route("/location/<location>")
-def local(location):
+def locaation(location=None):
+    
+    if request.method == "POST":
+        # get location that the user has entered
+        try:
+            location = request.form['location']
+            location = requests.get(location)
+        except:
+            errors = []
+            errors.append(
+                "Unable to get location. Please make sure it's valid and try again."
+            )
     location = getLatLng(location)
     weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
     charcount = len(weather)
@@ -268,5 +282,5 @@ def server_error(e):
     charcount = len(weather)
     return render_template('error.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2]), 500
     
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', debug=True)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True)

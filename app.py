@@ -235,7 +235,7 @@ def main():
     
 @app.route("/location/", methods=['POST', 'GET'])
 @app.route("/location/<location>")
-def locaation(location=None):
+def location(location=None):
     
     if request.method == "POST":
         # get location that the user has entered

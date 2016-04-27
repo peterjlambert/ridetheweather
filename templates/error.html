@@ -3,9 +3,11 @@
 
 <div class="error">
 	<h1>Something's gone wrong&hellip;</h1>
-	<p>&hellip;and whilst it might be my fault (it's probably my fault), it might be your fault too. I don't know. I'm not that clever. Have you checked you got the URL right?</p>
-	<p>If it is my fault (it probably is) then I'm really sorry for even implying that you might be even partially to blame. By way of an apology, please accept this current forecast for somewhere lovely.</p>
-	<p class="note">(If that doesn't work either and everything below this point is blank and broken, please let me know <a href="http://twitter.com/peterjlambert">@peterjlambert)</p>
+	<div class="forecast">
+		<p>&hellip;and whilst it might be my fault (it's probably my fault), it might be your fault too. I don't know. I'm not that clever. Have you checked you got the URL right?</p>
+		<p>If it is my fault (it probably is) then I'm really sorry for even implying that you might be even partially to blame. By way of an apology, please accept this current forecast for somewhere lovely.</p>
+		<p class="note">(If that doesn't work either and everything below this point is blank and broken, please let me know <a href="http://twitter.com/peterjlambert">@peterjlambert)</p>
+	</div>
 </div>
 
 {% if locationName %}<h1><a href="http://maps.google.com/maps?q={{ locationLat }},{{ locationLng }}&ll={{ locationLat }},{{ locationLng }}&z=17">{{ locationName }}</a></h1>{% endif %}

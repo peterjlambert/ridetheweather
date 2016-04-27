@@ -28,13 +28,12 @@ local_datetime_readable = local_timezone.localize(utcnow()).strftime(fmt)
 def rideTime(club): 
     day = whatdayisit()
     current_time = local_datetime
+    ride_time = current_time
     if club == "vcyork":
         if day == 'Tuesday' or day == 'Thursday':
             ride_time = local_datetime.replace(hour=18, minute=00, second=00)
         elif day == 'Saturday' or day == 'Sunday':
             ride_time = local_datetime.replace(hour=9, minute=00, second=00)
-    else:
-        ride_time = current_time
     
     ride_time_seconds = ride_time.astimezone(local_timezone).replace(tzinfo=None)
     current_time_seconds = current_time.astimezone(local_timezone).replace(tzinfo=None)

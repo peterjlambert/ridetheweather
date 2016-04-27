@@ -39,12 +39,14 @@ a{
 }
 
 .error{
-  color: #1E6374;
-  font-size: .8rem;
+  color: #13404A;
+  font-size: 1.2rem;
+  line-height: 1.4em;
   margin-bottom: 3em;
   h1{
-    color: #13404A;
+    color: #900;
   }
+  
 }
 @media only screen and (max-width: 780px) {
   div.container{

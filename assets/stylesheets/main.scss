@@ -8,6 +8,10 @@ body{
   font-family: Garamond, Baskerville, 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif;
   line-height: 1.4em;
 }
+fieldset{
+  border: 0;
+  padding: 0;
+}
 div.container{
   max-width: 760px;
   position: absolute;
@@ -16,17 +20,98 @@ div.container{
   transform: translateX(-50%) translateY(-50%);
   width: 760px;
 }
+form{
+  position: relative;
+}
+label{
+  display: inine-block;
+}
+
+input#form-toggle,
+label[for=location]{
+  position: absolute;
+  clip: rect(0,0,0,0);
+}
+
+input[type="text"]{
+  padding: .5em 1em;
+  width: 240px;
+}
+button{
+  appearance: none;
+  background: #2C90A5;
+  border: 0;
+  color: #fff;
+  padding: .5em 1em;
+  transition: all .3s ease;
+  &:hover{
+    background: #13404A;
+    transform: scale(1.2);
+  }
+}
+input#form-toggle{
+  + .change-location{
+    display: inline-block;
+    max-width: 0;
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 1s ease;
+    height: 0;
+  }
+  ~ label[for=form-toggle],
+  ~ h1{
+    transition: opacity 1s ease;
+    height: auto;
+  }
+}
+input#form-toggle:checked{
+  + .change-location{
+    opacity: 1;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+  }
+  ~ label[for=form-toggle],
+  ~ h1{
+    opacity: 0;
+    display: inline-block;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 0;
+  }
+}
+.forecast-header{
+  h1{
+    display: inline-block;
+    line-height: 2em;
+    padding: 0 0 1.6em 0;
+    margin-left: -.5em;
+  }
+  label{
+    color: #666;
+    &:hover{
+      color: #2C90A5;
+    }
+  }
+}
 div.forecast{
   background: #fff;
   padding: 2em;
   margin-bottom: .5em;
 }
-h1{
+h1, 
+label,
+button{
     font-size: .8rem;
-    font-family: helvetica;
+    font-family: helvetica, arial, sans-serif;
     font-weight: normal;
-    margin: 0;
     text-transform: uppercase;
+}
+h1,
+label{
+  margin: 0;
 }
 a{
   color: #2C90A5;
@@ -58,5 +143,8 @@ a{
   }
   div.forecast{
     padding: 1em;
+  }
+  .change-location{
+    white-space: normal;
   }
 }

@@ -34,13 +34,15 @@ label[for=location]{
 }
 
 input[type="text"]{
+  border: 1px solid #ccc;
+  font-size: 16px;
   padding: .5em 1em;
   width: 240px;
 }
 button{
   appearance: none;
   background: #2C90A5;
-  border: 0;
+  border: 1px solid #2C90A5;
   color: #fff;
   padding: .5em 1em;
   transition: all .3s ease;
@@ -108,6 +110,9 @@ button{
     font-family: helvetica, arial, sans-serif;
     font-weight: normal;
     text-transform: uppercase;
+}
+button{
+  font-size: 16px;
 }
 h1,
 label{

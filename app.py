@@ -282,5 +282,5 @@ def server_error(e):
     charcount = len(weather)
     return render_template('error.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2]), 500
     
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0', debug=True)

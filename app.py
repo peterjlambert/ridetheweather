@@ -271,16 +271,17 @@ def location(location):
 @app.route("/club/<clubname>")
 def club(clubname):
     if clubname == "vcyork":
-        location = getLatLng('York, UK')
+        startPoint = 'B&Q, Osbaldwick Link Road, York, UK'
+        location = getLatLng(startPoint)
         startLocation = "B&Q"
         startTime = rideTime(clubname)
         weather = getTheWeather(location[1], location[2], optUnits, startTime, startLocation, clubname)  
     else:
         location = getLatLng(getRandomLocation())
         weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
-    
+        startPoint = location[0]
     charcount = len(weather)
-    return render_template('index.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2])
+    return render_template('index.html', weather=weather, charcount=charcount, locationName=startPoint, locationLat=location[1], locationLng=location[2])
     
     
 @app.errorhandler(404)

@@ -2,7 +2,7 @@ from __future__ import print_function # In python 2.7
 import sys
 import os
 import requests
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect
 import forecastio
 from datetime import datetime, timedelta
 import datetime
@@ -234,6 +234,19 @@ def main():
     
     
 @app.route("/location/", methods=['POST', 'GET'])
+def locationSubmit():
+    if request.method == "POST":
+        # get location that the user has entered
+        try:
+            submittedLocation = request.form['location']
+            submittedLocation = requests.get(location)
+            print(submittedLocation, file=sys.stderr)
+        except:
+            submittedLocation = getRandomLocation()
+        # return submittedLocation
+        return redirect( url_for('location', location=submittedLocation))
+    
+
 @app.route("/location/<location>")
 def location(location=None):
     
@@ -282,5 +295,5 @@ def server_error(e):
     charcount = len(weather)
     return render_template('error.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2]), 500
     
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', debug=True)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True)

@@ -89,7 +89,7 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
    
    
     # Format compass bearing as textual compass point  
-    directions = ["N", "NNE", "ENE", "E", "ESE", "SSE", "S", "SSW", "WSW", "W", "WNW", "NNW"]
+    directions = ["North", "NNE", "ENE", "East", "ESE", "SSE", "South", "SSW", "WSW", "West", "WNW", "NNW"]
     def bearing_to_direction(bearing):
         d = 360. / 12.
         return directions[int(((bearing+d/2)/d)-1)] 

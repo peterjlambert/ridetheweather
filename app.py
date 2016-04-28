@@ -235,36 +235,38 @@ def main():
     
 @app.route("/location/", methods=['POST', 'GET'])
 def locationSubmit():
-    if request.method == "POST":
-        # get location that the user has entered
-        try:
-            submittedLocation = request.form['location']
-            submittedLocation = requests.get(location)
-            print(submittedLocation, file=sys.stderr)
-        except:
-            submittedLocation = getRandomLocation()
-        # return submittedLocation
-        return redirect( url_for('location', location=submittedLocation))
-    
+    submittedLocation=None
+    try:
+        submittedLocation = request.form['location']
+    except KeyError:
+        submittedLocation = getRandomLocation()
+        
+    print(submittedLocation, file=sys.stderr)
+    submittedLocation = submittedLocation.lower()
+    submittedLocation = submittedLocation.replace(", ","-")
+    submittedLocation = submittedLocation.replace(","," ")
+    submittedLocation = submittedLocation.replace(" ","-")
+    print(submittedLocation, file=sys.stderr)
+    return redirect(
+        url_for(
+            'location',
+            location=submittedLocation
+        )
+    )
 
 @app.route("/location/<location>")
-def location(location=None):
-    
-    if request.method == "POST":
-        # get location that the user has entered
-        try:
-            location = request.form['location']
-            location = requests.get(location)
-        except:
-            errors = []
-            errors.append(
-                "Unable to get location. Please make sure it's valid and try again."
-            )
+def location(location):
     location = getLatLng(location)
     weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
     charcount = len(weather)
-    return render_template('index.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2])
-    
+    return render_template(
+        'index.html',
+        weather=weather,
+        charcount=charcount,
+        locationName=location[0],
+        locationLat=location[1],
+        locationLng=location[2]
+    )
     
 @app.route("/club/<clubname>")
 def club(clubname):
@@ -295,5 +297,5 @@ def server_error(e):
     charcount = len(weather)
     return render_template('error.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2]), 500
     
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0', debug=True)

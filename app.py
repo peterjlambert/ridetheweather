@@ -11,6 +11,7 @@ from pytz import timezone
 import pytz
 import geocoder
 import random
+import colorsys
 
 app = Flask(__name__)
 
@@ -59,6 +60,33 @@ optLat = 53.9591
 optLng = -1.0815
 optLocation = getRandomLocation()
 optUnits = 'uk'
+
+def pseudocolor(val, minval, maxval):
+    # convert val in range minval..maxval to the range 0..120 degrees which
+    # correspond to the colors red..green in the HSV colorspace
+    h = (float(val-minval) / (maxval-minval)) * 120
+    # convert hsv color (h,1,1) to its rgb equivalent
+    # note: the hsv_to_rgb() function expects h to be in the range 0..1 not 0..360
+    r, g, b = colorsys.hsv_to_rgb(h/360, 1., 1.)
+    return r, g, b
+
+
+def temperatureColor(temp):
+    #Convert to Farenheit
+    temp = 10
+    tempF = (temp * 1.8) + 32
+    tempPercent = ((tempF*100)/100)/10
+    
+    color = pseudocolor(tempPercent*100, 0, 100)
+    r = int(color[0]*100)
+    g = int(color[1]*100)
+    b = int(color[2]*100)
+    g = 10
+    # return (r,g,b)     
+    r = lambda: random.randint(0,255)
+    return '#%02X%02X%02X' % (r(),r(),r())  
+    
+  
 
 
 
@@ -188,7 +216,8 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
     #Get the weather
     byCurrently = forecast.currently()
     weatherSummary = byCurrently.summary.lower()
-    temperature = temp_description(byCurrently.temperature)
+    rawTemperature = byCurrently.temperature
+    temperature = temp_description(rawTemperature)
     windBearing = winddir_text(byCurrently.windBearing)
     windSpeed = byCurrently.windSpeed
     strWindSpeed = str(int(round(byCurrently.windSpeed))) +  'mph'
@@ -197,7 +226,7 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
     if club == 'vcyork':
         tailWind = tail_wind(windSpeed, windBearing)
         
-    return showTheWeather(tailWind=tailWind)
+    return (showTheWeather(tailWind=tailWind), temperatureColor(rawTemperature))
     
         
 def getLatLng(location):
@@ -230,7 +259,7 @@ def main():
     location = getLatLng('York, UK')
     weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
     charcount = len(weather)
-    return render_template('index.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2])
+    return render_template('index.html', weather=weather[0], charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2], temperature=weather[1])
     
     
 @app.route("/location/", methods=['POST', 'GET'])
@@ -281,7 +310,7 @@ def club(clubname):
         weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
         startPoint = location[0]
     charcount = len(weather)
-    return render_template('index.html', weather=weather, charcount=charcount, locationName=startPoint, locationLat=location[1], locationLng=location[2])
+    return render_template('index.html', weather=weather[0], charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2], temperature=weather[1])
     
     
 @app.errorhandler(404)
@@ -289,14 +318,14 @@ def page_not_found(e):
     location = getLatLng(getRandomLocation())
     weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
     charcount = len(weather)
-    return render_template('error.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2]), 404
+    return render_template('error.html', weather=weather[0], charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2], temperature=weather[1]), 404
     
 @app.errorhandler(500)
 def server_error(e):
     location = getLatLng(getRandomLocation())
     weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
     charcount = len(weather)
-    return render_template('error.html', weather=weather, charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2]), 500
+    return render_template('error.html', weather=weather[0], charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2], temperature=weather[1]), 500
     
 # if __name__ == "__main__":
 #     app.run(host='0.0.0.0', debug=True)

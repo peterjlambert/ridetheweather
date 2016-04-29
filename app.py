@@ -147,7 +147,7 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
             return
 
     def temp_description(temp, apparentTemperature):
-        if apparentTemperature:
+        if apparentTemperature and apparentTemperature != temp:
             feelsLike = ' (feels like ' + readableTemperature(apparentTemperature) + ')' 
         else:
             feelsLike = ''
@@ -200,7 +200,7 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
         
     def showTheWeather(tailWind=None):
         theWeather = rideStart()
-        theWeather = theWeather + "The forecast is %s and %s" % (weatherSummary, temperature)
+        theWeather = theWeather + "The forecast is %s and %s " % (weatherSummary, temperature)
         theWeather = theWeather + "Wind is from the %s at %s." % (windBearing, strWindSpeed)
         if tailWind:
             theWeather = theWeather + tailWind
@@ -260,6 +260,7 @@ def getLatLng(location):
 ## Routes ##
 ############
 
+# Main route
 @app.route("/")
 def main():
     location = getLatLng('York, UK')
@@ -275,7 +276,7 @@ def main():
         temperature=weather[1],
         icon=weather[2])
     
-    
+# Location (submission)  
 @app.route("/location/", methods=['POST', 'GET'])
 def locationSubmit():
     submittedLocation=None
@@ -284,12 +285,10 @@ def locationSubmit():
     except KeyError:
         submittedLocation = getRandomLocation()
         
-    print(submittedLocation, file=sys.stderr)
     submittedLocation = submittedLocation.lower()
     submittedLocation = submittedLocation.replace(", ","-")
     submittedLocation = submittedLocation.replace(","," ")
     submittedLocation = submittedLocation.replace(" ","-")
-    print(submittedLocation, file=sys.stderr)
     return redirect(
         url_for(
             'location',
@@ -297,6 +296,7 @@ def locationSubmit():
         )
     )
 
+# Named Location
 @app.route("/location/<location>")
 def location(location):
     location = getLatLng(location)
@@ -311,7 +311,8 @@ def location(location):
         locationLng=location[2], 
         temperature=weather[1],
         icon=weather[2])
-    
+
+# Club   
 @app.route("/club/<clubname>")
 def club(clubname):
     if clubname == "vcyork":
@@ -335,7 +336,7 @@ def club(clubname):
         temperature=weather[1],
         icon=weather[2])
     
-    
+# Error 404
 @app.errorhandler(404)
 def page_not_found(e):
     location = getLatLng(getRandomLocation())
@@ -350,7 +351,10 @@ def page_not_found(e):
         locationLng=location[2], 
         temperature=weather[1],
         icon=weather[2]), 404
+        
+        
     
+# Error 500 
 @app.errorhandler(500)
 def server_error(e):
     location = getLatLng(getRandomLocation())

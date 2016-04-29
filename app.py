@@ -144,23 +144,28 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
         else:
             return
 
-    def temp_description(temp):
+    def temp_description(temp, apparentTemperature):
+        if apparentTemperature:
+            feelsLike = ' (feels like ' + readableTemperature(apparentTemperature) + ')' 
+        else:
+            feelsLike = ''
+            
         if temp <= 2:
-            tempDescription = 'a frost-bitey ' + readableTemperature(temp) + '. #stayindoors! '
+            tempDescription = 'a frost-bitey ' + readableTemperature(temp) + feelsLike + '. #stayindoors! '
         elif temp > 2 and temp <= 7:
-            tempDescription = "a blummin' nippy " + readableTemperature(temp) + '. '
+            tempDescription = "a blummin' nippy " + readableTemperature(temp) + feelsLike + '. '
         elif temp > 7 and temp <= 11:
-            tempDescription = "a cheeky " + readableTemperature(temp) + '. '
+            tempDescription = "a cheeky " + readableTemperature(temp) + feelsLike + '. '
         elif temp > 11 and temp <= 14:
-            tempDescription = "a comfortable " + readableTemperature(temp) + '. '
+            tempDescription = "a comfortable " + readableTemperature(temp) + feelsLike + '. '
         elif temp > 14 and temp <= 17:
-            tempDescription = "a balmy " + readableTemperature(temp) + '. Shorts! '
+            tempDescription = "a balmy " + readableTemperature(temp) + feelsLike + '. Shorts! '
         elif temp > 17 and temp <= 21:
-            tempDescription = "a toasty " + readableTemperature(temp) + ". #sunsoutgunsout! "
+            tempDescription = "a toasty " + readableTemperature(temp) + feelsLike + ". #sunsoutgunsout! "
         elif temp > 21 and temp <= 24:
-            tempDescription = "a crazy " + readableTemperature(temp)   + '.'  
+            tempDescription = "a crazy " + readableTemperature(temp) + feelsLike + '.'  
         elif temp > 24:
-            tempDescription = readableTemperature(temp) + '. Wow! Melting tarmac. '
+            tempDescription = readableTemperature(temp) + feelsLike + '. Wow! Melting tarmac. '
         else:
             tempDescription = readableTemperature(temp) + '. '
         return tempDescription
@@ -215,7 +220,8 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
     byCurrently = forecast.currently()
     weatherSummary = byCurrently.summary.lower()
     rawTemperature = byCurrently.temperature
-    temperature = temp_description(rawTemperature)
+    apparentTemperature = byCurrently.apparentTemperature
+    temperature = temp_description(rawTemperature, apparentTemperature)
     windBearing = winddir_text(byCurrently.windBearing)
     windSpeed = byCurrently.windSpeed
     strWindSpeed = str(int(round(byCurrently.windSpeed))) +  'mph'
@@ -357,5 +363,5 @@ def server_error(e):
         temperature=weather[1],
         icon=weather[2]), 500
     
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', debug=True)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True)

@@ -73,15 +73,6 @@ def pseudocolor(val, minval, maxval):
 
 
 def temperatureColor(temp):
-    #Convert to Farenheit
-    tempF = (temp * 1.8) + 32
-    tempPercent = ((tempF*100)/100)/10
-    
-    blues = []
-    yellows = []
-    oranges = []
-    reds = []
-         
     r = lambda: random.randint(0,255)
     return '#%02X%02X%02X' % (r(),r(),r())
     
@@ -236,6 +227,7 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
     
         
 def getLatLng(location):
+    rawLocation = location
     location = geocoder.google(location)
     
     if location.city:
@@ -245,7 +237,7 @@ def getLatLng(location):
     elif location.country_long:
         locationName = location.country_long
     else:
-        locationName = ""
+        locationName = rawLocation
     
     locationLatLng = location.latlng 
     if locationLatLng:

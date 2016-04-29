@@ -12,19 +12,14 @@ body{
   font-size: 1.8rem;
   font-family: Garamond, Baskerville, 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif;
   line-height: 1.4em;
+  > *{
+    max-width: 760px;
+    margin: 0 auto;
+  }
 }
 fieldset{
   border: 0;
   padding: 0;
-}
-.wrap{
-  display: flex;
-  height: 100%;  
-}
-div.container{
-  max-width: 760px;
-  margin: 3em auto;
-  width: 760px;
 }
 .site-header{
   padding-bottom: 1em;

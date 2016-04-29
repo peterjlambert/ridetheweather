@@ -76,14 +76,13 @@ def temperatureColor(temp):
     tempF = (temp * 1.8) + 32
     tempPercent = ((tempF*100)/100)/10
     
-    color = pseudocolor(tempPercent*100, 0, 100)
-    r = int(color[0]*100)
-    g = int(color[1]*100)
-    b = int(color[2]*100)
-    g = 10
-    # return (r,g,b)     
+    blues = []
+    yellows = []
+    oranges = []
+    reds = []
+         
     r = lambda: random.randint(0,255)
-    return '#%02X%02X%02X' % (r(),r(),r())  
+    return '#%02X%02X%02X' % (r(),r(),r())
     
   
 
@@ -166,29 +165,29 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
             tempDescription = readableTemperature(temp) + '. '
         return tempDescription
 
-    def weather_emoji(icon):
+    def weather_icon(icon):
         if icon == 'clear-day':
-            weatherIcon = ':sunny:'
+            weatherIcon = 'sun'
         elif icon == 'clear-night': 
-            weatherIcon = ':crescent_moon:'
+            weatherIcon = 'moon-stars'
         elif icon == 'rain': 
-            weatherIcon = ':rain:'
+            weatherIcon = 'cloud-rain'
         elif icon == 'snow': 
-            weatherIcon = ':snowman:'
+            weatherIcon = 'cloud-hail'
         elif icon == 'sleet': 
-            weatherIcon = ':snow:'
+            weatherIcon = 'cloud-hail'
         elif icon == 'wind': 
-            weatherIcon = ':dash:'
+            weatherIcon = 'wind'
         elif icon == 'fog': 
-            weatherIcon = ':tea:'
+            weatherIcon = 'fog'
         elif icon == 'cloudy': 
-            weatherIcon = ':cloud:'
+            weatherIcon = 'cloud'
         elif icon == 'partly-cloudy-day': 
-            weatherIcon = ':partly_sunny:'
+            weatherIcon = 'cloud-sun'
         elif icon == 'partly-cloudy-night': 
-            weatherIcon = ':crescent_moon: :cloud:'
+            weatherIcon = 'cloud-moon'
         else:
-            weatherIcon = ''
+            weatherIcon = None
         return weatherIcon
         
         
@@ -220,12 +219,12 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
     windBearing = winddir_text(byCurrently.windBearing)
     windSpeed = byCurrently.windSpeed
     strWindSpeed = str(int(round(byCurrently.windSpeed))) +  'mph'
-    weatherIcon = weather_emoji(byCurrently.icon)
+    weatherIcon = weather_icon(byCurrently.icon)
     tailWind = None
     if club == 'vcyork':
         tailWind = tail_wind(windSpeed, windBearing)
         
-    return (showTheWeather(tailWind=tailWind), temperatureColor(rawTemperature))
+    return (showTheWeather(tailWind=tailWind), temperatureColor(rawTemperature), weatherIcon)
     
         
 def getLatLng(location):
@@ -294,7 +293,8 @@ def location(location):
         locationName=location[0],
         locationLat=location[1],
         locationLng=location[2], 
-        temperature=weather[1])
+        temperature=weather[1],
+        icon=weather[2])
     
 @app.route("/club/<clubname>")
 def club(clubname):
@@ -316,7 +316,8 @@ def club(clubname):
         locationName=location[0], 
         locationLat=location[1], 
         locationLng=location[2], 
-        temperature=weather[1])
+        temperature=weather[1],
+        icon=weather[2])
     
     
 @app.errorhandler(404)
@@ -331,7 +332,8 @@ def page_not_found(e):
         locationName=location[0], 
         locationLat=location[1], 
         locationLng=location[2], 
-        temperature=weather[1]), 404
+        temperature=weather[1],
+        icon=weather[2]), 404
     
 @app.errorhandler(500)
 def server_error(e):
@@ -344,7 +346,8 @@ def server_error(e):
         locationName=location[0], 
         locationLat=location[1], 
         locationLng=location[2], 
-        temperature=weather[1]), 500
+        temperature=weather[1],
+        icon=weather[2]), 500
     
 # if __name__ == "__main__":
 #     app.run(host='0.0.0.0', debug=True)

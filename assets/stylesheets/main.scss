@@ -18,17 +18,36 @@ fieldset{
   padding: 0;
 }
 .wrap{
-  background: #900;
   display: flex;
   height: 100%;  
 }
 div.container{
   max-width: 760px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  margin: 3em auto;
   width: 760px;
+}
+.site-header{
+  padding-bottom: 1em;
+  padding-top: 3em;
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  h1{
+    display: none;
+    object{
+      max-width: 100%;
+    }
+  }
+  .forecast-icon{
+    margin: 0 auto;
+    max-width: 33%;
+    // position: absolute;
+    // top: 0;
+    // right: 0;
+    width: 100%;
+  }
 }
 form{
   position: relative;
@@ -97,6 +116,7 @@ input#form-toggle:checked{
 .forecast-header{
   background: rgba(255,255,255,.8);
   padding: .5em 1em 0;
+  position: relative;
   h1{
     display: inline-block;
     line-height: 2em;
@@ -157,6 +177,9 @@ a{
     transform: none;
     font-size: 1.2rem;
     width: auto;
+  }
+  .site-header{
+    padding-top: 1em;
   }
   div.forecast{
     padding: 1em;

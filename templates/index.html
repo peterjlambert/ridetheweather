@@ -1,8 +1,18 @@
 {% extends "layout.html" %}
 {% block body %}
 {% if locationName %}
-<div class="wrap" style="background-color: {{ temperature }}">
+<div class="wrap" data-wrap-color="{{ temperature }}">
 	<div class="container">
+		<header class="site-header">
+			<!--<h1>
+				<a href="{{ url_for('main') }}">
+					<object type="image/svg+xml" data="{{ url_for('static',filename='assets/images/ridetheweather.svg') }}" alt="Ride the Weather"></object>
+				</a>
+			</h1>-->
+			{% if icon %}
+				<object type="image/svg+xml" data="{{ url_for('static', filename='assets/images/weather/')}}{{ icon }}.svg" alt="" class="forecast-icon {{ icon }}"></object>
+			{% endif %}
+		</header>
 		<div class="forecast-header">
 			<form action="/location/" method="POST">
 				<input type="checkbox" id="form-toggle">

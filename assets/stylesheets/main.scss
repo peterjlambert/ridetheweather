@@ -100,7 +100,7 @@ input#form-toggle{
 input#form-toggle:checked{
   + .change-location{
     opacity: 1;
-    width: auto;
+    width: 100%;
     max-width: 100%;
     height: auto;
   }
@@ -112,6 +112,8 @@ input#form-toggle:checked{
     overflow: hidden;
     white-space: nowrap;
     height: 0;
+    clip: rect(0,0,0,0);
+    position: absolute;
   }
 }
 .forecast-header{

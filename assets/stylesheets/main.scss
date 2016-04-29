@@ -174,18 +174,12 @@ a{
   
 }
 @media only screen and (max-width: 780px) {
-  div.container{
-    position: static;
-    margin: 1em;
-    transform: none;
+  .forecast{
     font-size: 1.2rem;
     width: auto;
   }
   .site-header{
     padding-top: 1em;
-  }
-  div.forecast{
-    padding: 1em;
   }
   .change-location{
     white-space: normal;

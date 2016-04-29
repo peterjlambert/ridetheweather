@@ -257,7 +257,15 @@ def main():
     location = getLatLng('York, UK')
     weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
     charcount = len(weather)
-    return render_template('index.html', weather=weather[0], charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2], temperature=weather[1])
+    return render_template(
+        'index.html', 
+        weather=weather[0], 
+        charcount=charcount, 
+        locationName=location[0], 
+        locationLat=location[1], 
+        locationLng=location[2], 
+        temperature=weather[1],
+        icon=weather[2])
     
     
 @app.route("/location/", methods=['POST', 'GET'])

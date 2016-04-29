@@ -163,7 +163,7 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
         elif temp > 14 and temp <= 17:
             tempDescription = "a balmy " + readableTemperature(temp) + feelsLike + '. Shorts! '
         elif temp > 17 and temp <= 21:
-            tempDescription = "a toasty " + readableTemperature(temp) + feelsLike + ". #sunsoutgunsout! "
+            tempDescription = "a toasty " + readableTemperature(temp) + feelsLike + " #sunsoutgunsout! "
         elif temp > 21 and temp <= 24:
             tempDescription = "a crazy " + readableTemperature(temp) + feelsLike + '.'  
         elif temp > 24:

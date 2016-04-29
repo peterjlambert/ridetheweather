@@ -294,8 +294,7 @@ def location(location):
         locationName=location[0],
         locationLat=location[1],
         locationLng=location[2], 
-        temperature=weather[1])        
-    )
+        temperature=weather[1])
     
 @app.route("/club/<clubname>")
 def club(clubname):

@@ -73,7 +73,6 @@ def pseudocolor(val, minval, maxval):
 
 def temperatureColor(temp):
     #Convert to Farenheit
-    temp = 10
     tempF = (temp * 1.8) + 32
     tempPercent = ((tempF*100)/100)/10
     
@@ -290,11 +289,12 @@ def location(location):
     charcount = len(weather)
     return render_template(
         'index.html',
-        weather=weather,
+        weather=weather[0],
         charcount=charcount,
         locationName=location[0],
         locationLat=location[1],
-        locationLng=location[2]
+        locationLng=location[2], 
+        temperature=weather[1])        
     )
     
 @app.route("/club/<clubname>")
@@ -310,7 +310,14 @@ def club(clubname):
         weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
         startPoint = location[0]
     charcount = len(weather)
-    return render_template('index.html', weather=weather[0], charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2], temperature=weather[1])
+    return render_template(
+        'index.html', 
+        weather=weather[0], 
+        charcount=charcount, 
+        locationName=location[0], 
+        locationLat=location[1], 
+        locationLng=location[2], 
+        temperature=weather[1])
     
     
 @app.errorhandler(404)
@@ -318,14 +325,27 @@ def page_not_found(e):
     location = getLatLng(getRandomLocation())
     weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
     charcount = len(weather)
-    return render_template('error.html', weather=weather[0], charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2], temperature=weather[1]), 404
+    return render_template(
+        'error.html', 
+        weather=weather[0], 
+        charcount=charcount, 
+        locationName=location[0], 
+        locationLat=location[1], 
+        locationLng=location[2], 
+        temperature=weather[1]), 404
     
 @app.errorhandler(500)
 def server_error(e):
     location = getLatLng(getRandomLocation())
     weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
     charcount = len(weather)
-    return render_template('error.html', weather=weather[0], charcount=charcount, locationName=location[0], locationLat=location[1], locationLng=location[2], temperature=weather[1]), 500
+    return render_template('error.html', 
+        weather=weather[0], 
+        charcount=charcount, 
+        locationName=location[0], 
+        locationLat=location[1], 
+        locationLng=location[2], 
+        temperature=weather[1]), 500
     
 # if __name__ == "__main__":
 #     app.run(host='0.0.0.0', debug=True)

@@ -13,6 +13,13 @@
 </div>
 
 {% if locationName %}
+<header class="site-header">
+	{% if icon %}
+		<div class="forecast-icon">
+			<object type="image/svg+xml" data="{{ url_for('static', filename='assets/images/weather/')}}{{ icon }}.svg" alt="" class="{{ icon }}"></object>
+		</div>
+	{% endif %}
+</header>
 <div class="forecast-header">
 	<form action="/location/" method="POST">
 		<input type="checkbox" id="form-toggle">

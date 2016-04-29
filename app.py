@@ -188,7 +188,7 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
         elif icon == 'fog': 
             weatherIcon = 'fog'
         elif icon == 'cloudy': 
-            weatherIcon = 'cloud'
+            weatherIcon = 'clouds'
         elif icon == 'partly-cloudy-day': 
             weatherIcon = 'cloud-sun'
         elif icon == 'partly-cloudy-night': 

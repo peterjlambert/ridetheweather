@@ -49,6 +49,9 @@ div.container{
       transition: .3s ease;
       height: 100%;
     }
+    object.sun{
+      animation: spin 5s 1s infinite linear, rising 1s ease;
+    }
   }
 }
 form{
@@ -207,4 +210,8 @@ a{
     opacity: 1;
     transform: translateY(0);
   }
+}
+@keyframes spin{
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
 }

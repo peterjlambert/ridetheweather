@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import print_function # In python 2.7
 import sys
 import os
@@ -111,7 +112,8 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
 
      # Format Temperature
     def readableTemperature( temp ):
-        return '%dC' % (temp)
+        degreeChar = u'\N{DEGREE SIGN}'
+        return '%d%sC' % (temp, degreeChar)
    
    
     # Format compass bearing as textual compass point  

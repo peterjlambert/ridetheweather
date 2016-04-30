@@ -256,6 +256,7 @@ def getLatLng(location):
 @app.route("/")
 def main():
     location = getLatLng('York, UK')
+    print(local_datetime, file=sys.stderr)
     weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
     charcount = len(weather)
     return render_template(
@@ -266,7 +267,8 @@ def main():
         locationLat=location[1], 
         locationLng=location[2], 
         temperature=weather[1],
-        icon=weather[2])
+        icon=weather[2],
+        time=local_datetime)
     
 # Location (submission)  
 @app.route("/location/", methods=['POST', 'GET'])
@@ -302,7 +304,8 @@ def location(location):
         locationLat=location[1],
         locationLng=location[2], 
         temperature=weather[1],
-        icon=weather[2])
+        icon=weather[2],
+        time=local_datetime)
 
 # Club   
 @app.route("/club/<clubname>")
@@ -326,7 +329,8 @@ def club(clubname):
         locationLat=location[1], 
         locationLng=location[2], 
         temperature=weather[1],
-        icon=weather[2])
+        icon=weather[2],
+        time=local_datetime)
     
 # Error 404
 @app.errorhandler(404)

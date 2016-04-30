@@ -24,7 +24,7 @@
 	</form>
 </div>
 {% endif %}
-<div class="forecast" data-characters="{{ charcount }}" data-lat-lng="{{ locationLat }},{{ locationLng }}">
+<div class="forecast" data-characters="{{ charcount }}" data-lat-lng="{{ locationLat }},{{ locationLng }}" data-datetime="{{ time }}">
 	{% if weather %}
 		{{weather}}
 	{% endif %}

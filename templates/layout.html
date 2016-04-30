@@ -13,7 +13,38 @@
 
 <body>
 		{% block body %}{% endblock %}
+		
+		<script>
+		var options = {
+			enableHighAccuracy: true,
+			timeout: 5000,
+			maximumAge: 0
+		};
+		function success(pos) {
+			var crd = pos.coords;
+			console.log('Latitude : ' + crd.latitude);
+			console.log('Longitude: ' + crd.longitude);
+			window.location = '/location/' + crd.latitude + ',' + crd.longitude;
+		};
+
+		function error(err) {
+			console.warn('ERROR(' + err.code + '): ' + err.message);
+		};
+		function geolocate(){
+			navigator.geolocation.getCurrentPosition(success, error, options);
+		};
+
+		function setupLocationLink() {
+				if (navigator.geolocation) {
+						var link = document.querySelector('.locate-me');
+						link.className += ' enabled';
+						link.addEventListener("click", geolocate, true);
+				} 
+		};
+		setupLocationLink();
+		</script>
 </body>
+
 </html>
 
 

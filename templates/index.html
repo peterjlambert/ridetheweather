@@ -15,12 +15,21 @@
 			<label for="location" class="main"">Change Location</label>
 			<input type="text" id="location" name="location" placeholder="{{ locationName }}">
 			<button type="submit">Go</button>
-			<label for="form-toggle" class="cancel">Cancel</label>
+			<label for="form-toggle" class="cancel">
+				<img src="{{ url_for('static', filename='assets/images/cross.svg')}}" alt="Cancel" title="Cancel" class="tool-icon">
+				<span class="access">Cancel</span>
+			</label>
 		</span>
 		<h1>
 			<a href="http://maps.google.com/maps?q={{ locationLat }},{{ locationLng }}&ll={{ locationLat }},{{ locationLng }}&z=17">{{ locationName }}</a>
 		</h1>
-		<label for="form-toggle">Change</label>
+		<label for="form-toggle">
+			<img src="{{ url_for('static', filename='assets/images/pencil.svg')}}" alt="Change Location" title="Change Location" class="tool-icon">
+			<span class="access">Change</span></label>
+		<a href="#" class="locate-me">
+			<img src="{{ url_for('static', filename='assets/images/compass.svg')}}" alt="Locate Me" title="Locate Me" class="tool-icon">
+			<span class="access">Locate Me</span>
+		</a>
 	</form>
 </div>
 {% endif %}
@@ -29,6 +38,9 @@
 		{{weather}}
 	{% endif %}
 </div>
+
 {% endblock %}
+
+
 
 

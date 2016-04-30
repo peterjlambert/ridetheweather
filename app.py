@@ -25,7 +25,7 @@ def whatdayisit():
     return now.strftime("%A")
 
 fmt = '%-I%p'
-local_timezone = timezone('GMT')
+local_timezone = timezone('Europe/London')
 local_datetime = local_timezone.localize(utcnow())
 local_datetime_readable = local_timezone.localize(utcnow()).strftime(fmt)
 

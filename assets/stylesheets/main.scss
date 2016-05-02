@@ -149,8 +149,12 @@ a.locate-me{
     font-weight: normal;
     text-transform: uppercase;
 }
+a.locate-me{
+    float: right;
+    margin-top: .5em;
+}
 .tool-icon{
-  height: 18px;
+  height: 22px;
   opacity: .4;
   transition: all .3s ease; 
   margin: 0 .3em -.2em;

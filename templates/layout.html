@@ -3,7 +3,6 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<meta name="apple-mobile-web-app-capable" content="yes">
 	<title>Ride The Weather - Cycling conditions right now</title>
 	<link rel="/assets/stylesheets/main.css" rel="stylesheet" type="text/css">
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/stylesheets/main.css') }}">
@@ -14,14 +13,18 @@
 <body>
 		{% block body %}{% endblock %}
 		
-		<script>
+		<script>		
+		var ua = navigator.userAgent.toLowerCase(),
+        isAndroid = ua.indexOf("android") > -1,
+        geoTimeout = isAndroid ? '60000' : '3000';
+
 		var options = {
 			enableHighAccuracy: true,
-			timeout: 5000,
+			timeout: geoTimeout,
 			maximumAge: 0
 		};
-		function success(pos) {
-			var crd = pos.coords;
+		function success(position) {
+			var crd = position.coords;
 			console.log('Latitude : ' + crd.latitude);
 			console.log('Longitude: ' + crd.longitude);
 			window.location = '/location/' + crd.latitude + ',' + crd.longitude;
@@ -30,8 +33,9 @@
 		function error(err) {
 			console.warn('ERROR(' + err.code + '): ' + err.message);
 		};
-		function geolocate(){
+		function geolocate(e){
 			navigator.geolocation.getCurrentPosition(success, error, options);
+			e.preventDefault();
 		};
 
 		function setupLocationLink() {
@@ -39,7 +43,7 @@
 						var link = document.querySelector('.locate-me');
 						link.className += ' enabled';
 						link.addEventListener("click", geolocate, true);
-				} 
+				}
 		};
 		setupLocationLink();
 		</script>

@@ -3,7 +3,7 @@ from __future__ import print_function # In python 2.7
 import sys
 import os
 import requests
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, make_response
 import forecastio
 from datetime import datetime, timedelta
 import datetime
@@ -331,6 +331,37 @@ def club(clubname):
         temperature=weather[1],
         icon=weather[2],
         time=local_datetime)
+        
+@app.route("/club/<clubname>/rss.xml")
+def clubRSS(clubname):
+    if clubname == "vcyork":
+        startPoint = 'B&Q, Osbaldwick Link Road, York, UK'
+        location = getLatLng(startPoint)
+        startLocation = "B&Q"
+        startTime = rideTime(clubname)
+        weather = getTheWeather(location[1], location[2], optUnits, startTime, startLocation, clubname)  
+        proper_clubname = "VC York"
+    else:
+        location = getLatLng(getRandomLocation())
+        weather = getTheWeather(location[1], location[2], optUnits, local_datetime)
+        startPoint = location[0]
+        proper_clubname = ""
+        
+    charcount = len(weather)
+    rss_xml = render_template(
+        'rss.xml', 
+        weather=weather[0],
+        locationName=location[0], 
+        locationLat=location[1], 
+        locationLng=location[2], 
+        temperature=weather[1],
+        icon=weather[2],
+        time=local_datetime,
+        clubname=proper_clubname)
+    response = make_response(rss_xml)
+    response.headers['Content-Type'] = 'application/rss+xml'
+    response.headers['charset'] = 'utf8'
+    return response
     
 # Error 404
 @app.errorhandler(404)

@@ -1,0 +1,32 @@
+{% extends "nolayout.xml" %}
+{% block body %}<rss version="2.0">
+  <channel>
+    <title>
+     Ride The Weather {{ clubname }}
+    </title>
+    <description>
+      The weather forecast for today's ride.
+    </description>
+    <link>https://www.ridetheweather.com/club/{{clubname}}</link>
+    <copyright>Pete Lambert</copyright>
+    <language>en-gb</language>
+    <lastBuildDate>{{ time }}</lastBuildDate>
+    <pubDate>{{ time }}</pubDate>
+    <image>
+      <url>https://www.ridetheweather.com/{{ url_for('static', filename='assets/images/weather/')}}{{ icon }}</url>
+      <title>Ride The Weather - {{ clubname }} - {{ icon }}</title>
+      <link>https://www.ridetheweather.com/club/{{clubname}}</link>
+      <description>The weather forecast for today's ride</description>
+      <width>144</width>
+      <height>144</height>
+    </image>
+    <item>
+      <title>Today's {{clubname}} ride forecast</title>
+      <description>
+        {{ weather }}
+      </description>
+      <link>https://www.ridetheweather.com/club/{{clubname}}</link>
+      <pubDate>{{ time }}</pubDate>
+    </item>
+  </channel>
+</rss>{% endblock %}

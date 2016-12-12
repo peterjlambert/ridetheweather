@@ -152,13 +152,13 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
         elif temp > 11 and temp <= 14:
             tempDescription = "a comfortable " + readableTemperature(temp) + feelsLike + '. '
         elif temp > 14 and temp <= 17:
-            tempDescription = "a balmy " + readableTemperature(temp) + feelsLike + '. Shorts! '
+            tempDescription = "a balmy " + readableTemperature(temp) + feelsLike + '.'
         elif temp > 17 and temp <= 21:
-            tempDescription = "a toasty " + readableTemperature(temp) + feelsLike + " #sunsoutgunsout! "
+            tempDescription = "a toasty " + readableTemperature(temp) + feelsLike + "! "
         elif temp > 21 and temp <= 24:
-            tempDescription = "a crazy " + readableTemperature(temp) + feelsLike + '.'  
+            tempDescription = "a crazy " + readableTemperature(temp) + feelsLike + '! #scorcher.'  
         elif temp > 24:
-            tempDescription = readableTemperature(temp) + feelsLike + '. Wow! Melting tarmac. '
+            tempDescription = readableTemperature(temp) + feelsLike + '. Wow! I\'m melting. '
         else:
             tempDescription = readableTemperature(temp) + '. '
         return tempDescription
@@ -191,7 +191,7 @@ def getTheWeather(optLat=optLat, optLng=optLng, optUnits=optUnits, optStartTime=
         
     def showTheWeather(tailWind=None):
         theWeather = rideStart()
-        theWeather = theWeather + "The forecast is %s and %s " % (weatherSummary, temperature)
+        theWeather = theWeather + "It\'s currently %s and %s " % (weatherSummary, temperature)
         theWeather = theWeather + "Wind is from the %s at %s." % (windBearing, strWindSpeed)
         if tailWind:
             theWeather = theWeather + tailWind
